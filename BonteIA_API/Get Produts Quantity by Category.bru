@@ -1,0 +1,15 @@
+meta {
+  name: Get Produts Quantity by Category
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://127.0.0.1:5000/api/products_por_categoria?categoria=Alimentos
+  body: none
+  auth: inherit
+}
+
+params:query {
+  categoria: Alimentos
+}

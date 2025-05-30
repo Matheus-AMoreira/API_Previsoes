@@ -1,0 +1,15 @@
+meta {
+  name: Train IA
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5000/api/atualizar_previsoes?categoria=Alimentos
+  body: none
+  auth: inherit
+}
+
+params:query {
+  categoria: Alimentos
+}

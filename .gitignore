@@ -1,5 +1,7 @@
 Dados/
+.env
 Model/
 models/
 testmodel.py
 __pycache__
+model.pth
