@@ -7,7 +7,7 @@ import os
 from datetime import datetime
 import pandas as pd
 import torch
-from train-predict import update_predictions, create_prediction_table
+from train_predict import update_predictions, create_prediction_table
 
 # Carrega variáveis de ambiente
 load_dotenv()
