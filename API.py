@@ -14,8 +14,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Configuração do CORS para permitir requisições de http://localhost:3000
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+# Configuração do CORS para permitir requisições
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:9000"}})
 
 # Configuração do banco de dados
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
@@ -190,4 +190,4 @@ def get_previsoes():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
