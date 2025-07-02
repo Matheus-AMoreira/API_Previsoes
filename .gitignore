@@ -5,3 +5,7 @@ models/
 testmodel.py
 __pycache__
 model.pth
+DataBase.sql
+README.md
+BonteIA_API
+env

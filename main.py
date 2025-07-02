@@ -4,10 +4,11 @@ from flask_cors import CORS
 from sqlalchemy import func, extract, distinct
 from dotenv import load_dotenv
 import os
-from datetime import datetime
 import pandas as pd
 import torch
 from train_predict import update_predictions, create_prediction_table
+from datetime import datetime, timezone
+from dateutil.relativedelta import relativedelta
 
 # Carrega variáveis de ambiente
 load_dotenv()
@@ -15,7 +16,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Configuração do CORS para permitir requisições
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:9000"}})
+CORS(app, origins="*")
 
 # Configuração do banco de dados
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
@@ -34,43 +35,53 @@ class Product(db.Model):
     purchase_currency = db.Column(db.String(10), nullable=False)
     sale_price = db.Column(db.Numeric(10, 2))
     sale_currency = db.Column(db.String(10))
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
 # Modelo da tabela de predictions
 class Prediction(db.Model):
     __tablename__ = 'predictions'
     id = db.Column(db.Integer, primary_key=True)
-    categoria = db.Column(db.String(100), nullable=False)
+    categoria = db.Column(db.String(100), nullable=True)
+    name = db.Column(db.String(255), nullable=True)  
     ano = db.Column(db.Integer, nullable=False)
     mes = db.Column(db.Integer, nullable=False)
     quantidade = db.Column(db.Integer, nullable=False)
-    created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, nullable=False, default=datetime.now(timezone.utc))
 
-@app.route('/api/products_por_categoria', methods=['GET'])
-def get_products_por_categoria():
+#Cria as tabelas
+with app.app_context():
+    db.create_all()
+
+# 1. Obter dados históricos de produtos
+@app.route('/api/products', methods=['GET'])
+def get_products_data():
     try:
-        categoria = request.args.get('categoria')
-        if not categoria:
-            return jsonify({'error': 'Categoria é obrigatória'}), 400
+        categoria = request.args.get('category')
+        name = request.args.get('name')
 
+        if not categoria and not name:
+            return jsonify({'error': 'O parâmetro "category" ou "name" é obrigatório'}), 400
+        if categoria and name:
+            return jsonify({'error': 'Forneça apenas "category" ou "name", não ambos'}), 400
+
+        query_filter = Product.category == categoria if categoria else Product.name == name
+        
         resultados = (db.session.query(
             extract('year', Product.created_at).label('ano'),
             extract('month', Product.created_at).label('mes'),
             func.sum(Product.quantity).label('total_quantidade')
-        )
-        .filter(Product.category == categoria)
-        .group_by(
+        ).filter(query_filter).group_by(
             extract('year', Product.created_at),
             extract('month', Product.created_at)
-        )
-        .order_by(
+        ).order_by(
             extract('year', Product.created_at),
             extract('month', Product.created_at)
-        )
-        .all())
+        ).all())
 
+        response_key = 'categoria' if categoria else 'name'
+        response_value = categoria if categoria else name
         response = {
-            'categoria': categoria,
+            response_key: response_value,
             'dados': [
                 {
                     'ano': int(resultado.ano),
@@ -79,58 +90,61 @@ def get_products_por_categoria():
                 } for resultado in resultados
             ]
         }
-
         return jsonify(response), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/atualizar_previsoes', methods=['POST'])
-def atualizar_previsoes():
+# 2. Gerar/Atualizar previsões
+@app.route('/api/predictions', methods=['POST'])
+def update_predictions_endpoint():
     try:
-        categoria = request.args.get('categoria')
-        if not categoria:
-            return jsonify({'error': 'Categoria é obrigatória'}), 400
+        data = request.get_json()
+        categoria = data.get('category')
+        name = data.get('name')
 
+        if not categoria and not name:
+            return jsonify({'error': 'O campo "category" ou "name" é obrigatório no corpo da requisição'}), 400
+        if categoria and name:
+            return jsonify({'error': 'Forneça apenas "category" ou "name", não ambos'}), 400
+            
+        key_type = 'category' if categoria else 'name'
+        key_value = categoria if categoria else name
+        
+        query_filter = Product.category == key_value if key_type == 'category' else Product.name == key_value
+        
+        # Busca os dados históricos (mesma lógica do endpoint GET /api/products)
         resultados = (db.session.query(
             extract('year', Product.created_at).label('ano'),
             extract('month', Product.created_at).label('mes'),
             func.sum(Product.quantity).label('quantidade')
-        )
-        .filter(Product.category == categoria)
-        .group_by(
+        ).filter(query_filter).group_by(
             extract('year', Product.created_at),
             extract('month', Product.created_at)
-        )
-        .order_by(
-            extract('year', Product.created_at),
-            extract('month', Product.created_at)
-        )
-        .all())
-
+        ).all())
+        
         if not resultados:
-            return jsonify({'error': f'Nenhum dado encontrado para a categoria {categoria}'}), 404
+            return jsonify({'error': f'Nenhum dado encontrado para {key_type} {key_value}'}), 404
 
-        df = pd.DataFrame([
-            {'ano': int(r.ano), 'mes': int(r.mes), 'quantidade': int(r.quantidade)}
-            for r in resultados
-        ])
-
+        df = pd.DataFrame([{'ano': r.ano, 'mes': r.mes, 'quantidade': r.quantidade} for r in resultados])
+        
         create_prediction_table()
-
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        predictions = update_predictions(df, categoria, device)
+        
+        # Chama a função `update_predictions` atualizada
+        predictions = update_predictions(df, key_type, key_value, device)
 
         return jsonify({
-            'categoria': categoria,
+            key_type: key_value,
             'previsoes': predictions
         }), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/categorias', methods=['GET'])
-def get_categorias():
+# 3. Obter a lista de categorias
+@app.route('/api/categories', methods=['GET'])
+def get_categories():
     try:
         categorias = db.session.query(distinct(Product.category)).all()
         categorias_list = [categoria[0] for categoria in categorias]
@@ -143,20 +157,19 @@ def get_categorias():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/previsoes', methods=['GET'])
-def get_previsoes():
+# 4. Consultar as previsões salvas
+@app.route('/api/predictions', methods=['GET'])
+def get_predictions():
     try:
-        categoria = request.args.get('categoria')
+        categoria = request.args.get('category')
+        name = request.args.get('name')
         
-        query = db.session.query(
-            Prediction.categoria,
-            Prediction.ano,
-            Prediction.mes,
-            Prediction.quantidade
-        )
+        query = db.session.query(Prediction)
         
         if categoria:
             query = query.filter(Prediction.categoria == categoria)
+        if name:
+            query = query.filter(Prediction.name == name)
         
         resultados = query.order_by(
             Prediction.categoria,
@@ -170,24 +183,46 @@ def get_previsoes():
         # Agrupar resultados por categoria
         grouped_data = {}
         for resultado in resultados:
-            cat = resultado.categoria
-            if cat not in grouped_data:
-                grouped_data[cat] = []
-            grouped_data[cat].append({
+        # Define a chave e o tipo (categoria ou nome)
+            key_type = 'categoria' if resultado.categoria else 'name'
+            key_value = resultado.categoria if resultado.categoria else resultado.name
+
+            if key_value not in grouped_data:
+                grouped_data[key_value] = {'key_type': key_type, 'dados': []}
+        
+            grouped_data[key_value]['dados'].append({
                 'ano': resultado.ano,
                 'mes': resultado.mes,
                 'quantidade': resultado.quantidade
             })
 
         response = [
-            {'categoria': cat, 'dados': dados}
-            for cat, dados in grouped_data.items()
+            {item['key_type']: key, 'dados': item['dados']}
+            for key, item in grouped_data.items()
         ]
 
         return jsonify(response), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+#End points para nome
+
+@app.route('/api/names', methods=['GET'])
+def get_names():
+    try:
+        names = db.session.query(distinct(Product.name)).all()
+        names_list = [name[0] for name in names]
+        
+        if not names_list:
+            return jsonify({'error': 'Nenhum nome de produto encontrado'}), 404
+
+        return jsonify({'names': names_list}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

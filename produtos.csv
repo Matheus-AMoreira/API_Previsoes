@@ -1,0 +1,113 @@
+id,name,category,expiration_date,quantity,purchase_price,purchase_currency,sale_price,sale_currency,created_at
+97,Arroz Integral 5kg,Alimentos,2025-12-31,200,15.50,BRL,22.00,BRL,2024-01-15 10:00:00
+98,Smartphone Galaxy S23,Eletrônicos,,50,800.00,USD,1000.00,USD,2024-02-20 14:30:00
+99,Camiseta Algodão M,Vestuário,,150,25.00,BRL,40.00,BRL,2024-03-10 09:15:00
+100,Leite em Pó 400g,Alimentos,2026-06-30,300,12.75,BRL,18.50,BRL,2024-04-05 11:45:00
+101,Fone de Ouvido Bluetooth,Eletrônicos,,80,50.00,USD,70.00,USD,2024-05-12 16:20:00
+102,Calça Jeans Azul,Vestuário,,100,80.00,BRL,120.00,BRL,2024-06-18 13:10:00
+103,Feijão Carioca 1kg,Alimentos,2025-09-30,250,8.90,BRL,13.50,BRL,2024-07-22 08:50:00
+104,Notebook Dell Inspiron,Eletrônicos,,30,1200.00,USD,1500.00,USD,2024-08-30 15:25:00
+105,Tênis Esportivo Nike,Vestuário,,120,150.00,BRL,220.00,BRL,2024-09-14 12:00:00
+106,Azeite Extra Virgem 500ml,Alimentos,2026-03-31,180,35.00,BRL,50.00,BRL,2024-10-01 10:30:00
+107,"Televisor LED 55'"",Eletrônicos,,40,600.00,USD,800.00,USD,2024-11-05 17:40:00
+108,Jaqueta de Couro,Vestuário,,90,200.00,BRL,300.00,BRL,2024-12-12 14:15:00
+109,Macarrão Espaguete 500g,Alimentos,2025-11-30,400,4.50,BRL,7.00,BRL,2025-01-20 09:00:00
+110,Mouse Sem Fio Logitech,Eletrônicos,,200,20.00,USD,30.00,USD,2025-02-25 11:50:00
+111,Vestido Floral,Vestuário,,130,60.00,BRL,90.00,BRL,2025-03-15 13:30:00
+112,Café em Grão 1kg,Alimentos,2026-01-31,220,30.00,BRL,45.00,BRL,2025-04-10 10:20:00
+113,"Tablet Samsung 10'"",Eletrônicos,,60,300.00,USD,400.00,USD,2024-01-30 15:00:00
+114,Sapato Social Masculino,Vestuário,,110,120.00,BRL,180.00,BRL,2024-02-28 12:45:00
+115,Biscoito Recheado 150g,Alimentos,2025-08-31,350,3.20,BRL,5.00,BRL,2024-03-25 09:10:00
+116,Câmera Digital Canon,Eletrônicos,,25,500.00,USD,650.00,USD,2024-04-15 16:30:00
+117,Bermuda Esportiva,Vestuário,,140,40.00,BRL,60.00,BRL,2024-05-20 14:00:00
+118,Suco de Laranja 1L,Alimentos,2025-07-31,280,6.50,BRL,10.00,BRL,2024-06-10 11:15:00
+119,"Monitor 24'" Full HD",Eletrônicos,,70,150.00,USD,200.00,USD,2024-07-05 13:50:00
+120,Blusa de Lã,Vestuário,,160,70.00,BRL,100.00,BRL,2024-08-12 10:40:00
+121,Farinha de Trigo 1kg,Alimentos,2025-10-31,300,5.00,BRL,8.00,BRL,2024-09-18 09:30:00
+122,Teclado Mecânico RGB,Eletrônicos,,90,80.00,USD,110.00,USD,2024-10-22 15:20:00
+123,Calça Legging,Vestuário,,170,50.00,BRL,75.00,BRL,2024-11-30 12:10:00
+124,Iogurte Natural 900g,Alimentos,2025-06-30,260,10.00,BRL,15.00,BRL,2024-12-15 14:25:00
+125,Smartwatch Xiaomi,Eletrônicos,,100,100.00,USD,140.00,USD,2025-01-10 16:00:00
+126,Chinelo Havaianas,Vestuário,,200,20.00,BRL,30.00,BRL,2025-02-05 11:30:00
+127,Açúcar Refinado 1kg,Alimentos,2026-02-28,320,4.00,BRL,6.50,BRL,2025-03-12 09:50:00
+128,Impressora Multifuncional,Eletrônicos,,35,250.00,USD,320.00,USD,2025-04-01 13:15:00
+129,Moletom com Capuz,Vestuário,,180,90.00,BRL,130.00,BRL,2024-01-25 10:00:00
+130,Molho de Tomate 340g,Alimentos,2025-11-30,400,2.50,BRL,4.00,BRL,2024-02-15 12:20:00
+131,Carregador USB-C,Eletrônicos,,250,15.00,USD,22.00,USD,2024-03-05 14:45:00
+132,Saia Midi,Vestuário,,140,55.00,BRL,80.00,BRL,2024-04-20 11:00:00
+133,Cereal Matinal 300g,Alimentos,2025-09-30,300,8.00,BRL,12.00,BRL,2024-05-25 09:25:00
+134,Roteador Wi-Fi 6,Eletrônicos,,60,120.00,USD,160.00,USD,2024-06-30 15:10:00
+135,Boné Esportivo,Vestuário,,200,30.00,BRL,45.00,BRL,2024-07-15 12:35:00
+136,Óleo de Soja 900ml,Alimentos,2026-04-30,280,7.50,BRL,11.00,BRL,2024-08-20 10:50:00
+137,Caixa de Som Bluetooth,Eletrônicos,,80,70.00,USD,95.00,USD,2024-09-25 14:00:00
+138,Camisa Polo,Vestuário,,150,45.00,BRL,65.00,BRL,2024-10-10 11:15:00
+139,Manteiga 200g,Alimentos,2025-08-31,350,9.00,BRL,13.50,BRL,2024-11-15 09:40:00
+140,Console PS5,Eletrônicos,,20,900.00,USD,1100.00,USD,2024-12-20 16:30:00
+141,Meia Esportiva,Vestuário,,300,10.00,BRL,15.00,BRL,2025-01-05 12:00:00
+142,Sal Refinado 1kg,Alimentos,2026-05-31,400,2.00,BRL,3.50,BRL,2025-02-10 10:25:00
+143,Pendrive 64GB,Eletrônicos,,200,10.00,USD,15.00,USD,2025-03-15 14:50:00
+144,Casaco de Inverno,Vestuário,,120,150.00,BRL,220.00,BRL,2025-04-05 11:10:00
+145,Chá de Camomila 100g,Alimentos,2025-12-31,250,5.50,BRL,8.50,BRL,2024-01-10 09:00:00
+146,Projetor LED,Eletrônicos,,30,400.00,USD,500.00,USD,2024-02-20 15:30:00
+147,Calça Social,Vestuário,,100,100.00,BRL,150.00,BRL,2024-03-30 12:45:00
+148,Geleia de Morango 300g,Alimentos,2025-10-31,300,6.00,BRL,9.00,BRL,2024-04-25 10:15:00
+149,Webcam HD,Eletrônicos,,150,30.00,USD,45.00,USD,2024-05-15 14:00:00
+150,Cinto de Couro,Vestuário,,180,35.00,BRL,50.00,BRL,2024-06-20 11:30:00
+151,Atum em Lata 170g,Alimentos,2026-03-31,450,4.50,BRL,7.00,BRL,2024-07-25 09:50:00
+152,Headset Gamer,Eletrônicos,,90,60.00,USD,85.00,USD,2024-08-30 15:20:00
+153,Jaqueta Jeans,Vestuário,,140,80.00,BRL,120.00,BRL,2024-09-05 12:10:00
+154,Leite Condensado 395g,Alimentos,2025-11-30,320,5.50,BRL,8.50,BRL,2024-10-10 10:40:00
+155,"Smart TV 43'"",Eletrônicos,,50,500.00,USD,650.00,USD,2024-11-15 16:00:00
+156,Sapatênis Casual,Vestuário,,160,70.00,BRL,100.00,BRL,2024-12-20 11:25:00
+157,Milho para Pipoca 500g,Alimentos,2025-09-30,400,3.00,BRL,5.00,BRL,2025-01-25 09:15:00
+158,Adaptador HDMI,Eletrônicos,,200,12.00,USD,18.00,USD,2025-02-15 14:30:00
+159,Regata Esportiva,Vestuário,,180,25.00,BRL,40.00,BRL,2025-03-20 12:00:00
+160,Massa para Bolo 400g,Alimentos,2025-12-31,300,4.00,BRL,6.50,BRL,2025-04-10 10:45:00
+161,Drone com Câmera,Eletrônicos,,40,300.00,USD,400.00,USD,2024-01-15 15:00:00
+162,Cachecol de Lã,Vestuário,,150,30.00,BRL,45.00,BRL,2024-02-25 11:20:00
+163,Erva-Mate 500g,Alimentos,2026-01-31,250,7.00,BRL,10.50,BRL,2024-03-10 09:30:00
+164,Cabo USB 2m,Eletrônicos,,300,8.00,USD,12.00,USD,2024-04-05 14:50:00
+165,Camisa Social,Vestuário,,120,60.00,BRL,90.00,BRL,2024-05-15 12:15:00
+166,Sardinha em Lata 125g,Alimentos,2025-10-31,400,3.50,BRL,5.50,BRL,2024-06-20 10:00:00
+167,Power Bank 10000mAh,Eletrônicos,,100,40.00,USD,55.00,USD,2024-07-25 15:30:00
+168,Calça de Moletom,Vestuário,,140,50.00,BRL,75.00,BRL,2024-08-30 11:45:00
+169,Creme de Leite 200g,Alimentos,2025-08-31,350,3.00,BRL,4.50,BRL,2024-09-05 09:20:00
+170,Controle Remoto Universal,Eletrônicos,,200,15.00,USD,22.00,USD,2024-10-10 14:00:00
+171,Bolsa Feminina,Vestuário,,160,80.00,BRL,120.00,BRL,2024-11-15 12:30:00
+172,Achocolatado 400g,Alimentos,2025-11-30,300,6.50,BRL,9.50,BRL,2024-12-20 10:10:00
+173,Microfone USB,Eletrônicos,,90,50.00,USD,70.00,USD,2025-01-25 15:15:00
+174,Calça Cargo,Vestuário,,130,70.00,BRL,100.00,BRL,2025-02-15 11:00:00
+175,Gelatina em Pó 35g,Alimentos,2025-12-31,400,2.00,BRL,3.50,BRL,2025-03-20 09:40:00
+176,Mini Teclado Bluetooth,Eletrônicos,,150,25.00,USD,35.00,USD,2025-04-05 14:20:00
+177,Mochila Esportiva,Vestuário,,180,90.00,BRL,130.00,BRL,2024-01-30 12:50:00
+178,Vinagre de Maçã 500ml,Alimentos,2026-02-28,250,5.00,BRL,7.50,BRL,2024-02-10 10:00:00
+179,Fone In-Ear,Eletrônicos,,300,10.00,USD,15.00,USD,2024-03-15 15:45:00
+180,Luva de Inverno,Vestuário,,200,20.00,BRL,30.00,BRL,2024-04-20 11:30:00
+181,Maionese 500g,Alimentos,2025-09-30,350,7.50,BRL,11.00,BRL,2024-05-25 09:15:00
+182,Hub USB 4 Portas,Eletrônicos,,250,12.00,USD,18.00,USD,2024-06-30 14:00:00
+183,Camiseta Estampada,Vestuário,,170,35.00,BRL,50.00,BRL,2024-07-05 12:20:00
+184,Pão de Forma 500g,Alimentos,2025-07-31,400,5.50,BRL,8.50,BRL,2024-08-10 10:45:00
+185,Cabo HDMI 3m,Eletrônicos,,200,15.00,USD,22.00,USD,2024-09-15 15:10:00
+186,Calça de Alfaiataria,Vestuário,,150,100.00,BRL,150.00,BRL,2024-10-20 11:55:00
+187,Mel 300g,Alimentos,2026-01-31,300,15.00,BRL,22.00,BRL,2024-11-25 09:30:00
+188,Mouse Pad Gamer,Eletrônicos,,250,10.00,USD,15.00,USD,2024-12-30 14:25:00
+189,Blusa de Manga Longa,Vestuário,,180,50.00,BRL,75.00,BRL,2025-01-15 12:00:00
+190,Mostarda 200g,Alimentos,2025-10-31,350,4.50,BRL,7.00,BRL,2025-02-20 10:15:00
+191,Carregador Portátil,Eletrônicos,,200,20.00,USD,30.00,USD,2025-03-25 15:00:00
+192,Óculos de Sol,Vestuário,,160,60.00,BRL,90.00,BRL,2025-04-10 11:40:00
+193,Arroz Branco 5kg,Alimentos,2026-03-31,220,14.00,BRL,20.00,BRL,2025-04-15 10:00:00
+194,Smartphone iPhone 14,Eletrônicos,,45,900.00,USD,1100.00,USD,2025-04-20 14:30:00
+195,Calça Esportiva,Vestuário,,160,65.00,BRL,95.00,BRL,2025-04-25 11:15:00
+196,Iogurte de Morango 900g,Alimentos,2025-12-31,270,11.00,BRL,16.00,BRL,2025-04-30 09:45:00
+197,Teclado Sem Fio,Eletrônicos,,120,35.00,USD,50.00,USD,2025-05-05 15:20:00
+198,Jaqueta Impermeável,Vestuário,,130,110.00,BRL,160.00,BRL,2025-05-10 12:30:00
+199,Feijão Preto 1kg,Alimentos,2026-02-28,260,9.00,BRL,13.00,BRL,2025-05-15 10:10:00
+200,"Monitor 27'" 4K",Eletrônicos,,50,300.00,USD,400.00,USD,2025-05-20 16:00:00
+201,Tênis Casual Adidas,Vestuário,,140,130.00,BRL,190.00,BRL,2025-05-25 11:50:00
+202,Azeite de Oliva 1L,Alimentos,2026-05-31,200,40.00,BRL,60.00,BRL,2025-05-30 09:30:00
+203,"Smart TV 50'"",Eletrônicos,,60,550.00,USD,700.00,USD,2025-06-05 14:45:00
+204,Camiseta Esportiva,Vestuário,,170,35.00,BRL,50.00,BRL,2025-06-10 12:15:00
+205,Macarrão Penne 500g,Alimentos,2026-01-31,350,4.80,BRL,7.50,BRL,2025-06-15 10:00:00
+206,Fone Over-Ear Sony,Eletrônicos,,80,100.00,USD,130.00,USD,2025-06-20 15:30:00
+207,Shorts Jeans,Vestuário,,150,45.00,BRL,65.00,BRL,2025-06-25 11:20:00
+208,Leite Integral 1L,Alimentos,2025-12-31,300,5.50,BRL,8.00,BRL,2025-06-30 09:15:00

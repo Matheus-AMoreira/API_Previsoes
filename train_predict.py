@@ -2,13 +2,14 @@ import pandas as pd
 import numpy as np
 import torch
 import torch.nn as nn
+import os
+
 from sklearn.preprocessing import StandardScaler
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
-import os
-from datetime import datetime
+from datetime import datetime, timezone
 from dateutil.relativedelta import relativedelta
 
 # Carrega variáveis de ambiente
@@ -24,7 +25,8 @@ Session = sessionmaker(bind=engine)
 class Prediction(Base):
     __tablename__ = 'predictions'
     id = Column(Integer, primary_key=True)
-    categoria = Column(String(100), nullable=False)
+    categoria = Column(String(100), nullable=True)
+    name = Column(String(255), nullable=True)
     ano = Column(Integer, nullable=False)
     mes = Column(Integer, nullable=False)
     quantidade = Column(Integer, nullable=False)
@@ -115,9 +117,10 @@ def train_model(df, target_column, test_size=0.2, random_state=42, device='cpu',
         if epoch % 10 == 0:
             print(f'Epoch: {epoch} | Training Loss: {loss.item()} | Test Loss: {test_loss.item()}')
     
+    model.load_state_dict(torch.load('model.pth'))
     return model, scaler_X, scaler_y
 
-def predict_next_six_months(df, model, scaler_X, scaler_y, device, categoria, lag_features=3):
+def predict_next_six_months(df, model, scaler_X, scaler_y, device, key_type, key_value, lag_features=3):
     """Faz previsões para os próximos seis meses."""
     model.eval()
     last_data = df.tail(lag_features)[['quantidade']].values.flatten()
@@ -125,13 +128,19 @@ def predict_next_six_months(df, model, scaler_X, scaler_y, device, categoria, la
     predictions = []
     current_date = datetime.now()
     
+    prediction_data = {
+        'ano': ano,
+        'mes': mes,
+        'quantidade': pred
+    }
+
     for i in range(6):
         input_data = last_data[-lag_features:]
         input_data = scaler_X.transform(input_data.reshape(1, -1))
         input_tensor = torch.tensor(input_data, dtype=torch.float32).to(device)
         
         with torch.inference_mode():
-            pred = model(input_tensor)
+         pred = model(input_tensor)
         pred = scaler_y.inverse_transform(pred.cpu().numpy().reshape(-1, 1)).flatten()[0]
         pred = max(0, int(round(pred)))
         
@@ -139,18 +148,20 @@ def predict_next_six_months(df, model, scaler_X, scaler_y, device, categoria, la
         ano = forecast_date.year
         mes = forecast_date.month
         
-        predictions.append({
-            'categoria': categoria,
-            'ano': ano,
-            'mes': mes,
-            'quantidade': pred
-        })
+        if key_type == 'category':
+            prediction_data['categoria'] = key_value
+            prediction_data['name'] = None
+        else: # key_type == 'name'
+            prediction_data['categoria'] = None
+            prediction_data['name'] = key_value
+
+        predictions.append(prediction_data)
         
         last_data = np.append(last_data, pred)[-lag_features:]
     
     return predictions
 
-def update_predictions(df, categoria, device='cpu'):
+def update_predictions(df, key_type, key_value, device='cpu'):
     """Atualiza previsões no banco para a categoria especificada."""
     if len(df) < 4:  # 3 lags + 1 target
         raise ValueError("Dados insuficientes para treinar o modelo (mínimo 4 meses).")
@@ -169,23 +180,25 @@ def update_predictions(df, categoria, device='cpu'):
         scaler_X=scaler_X,
         scaler_y=scaler_y,
         device=device,
-        categoria=categoria
+        key_type=key_type,    # Passa o tipo
+        key_value=key_value   # Passa o valor
     )
     
     session = Session()
     try:
-        # Deletar previsões existentes para a categoria, ano e mês
-        for pred in predictions:
-            session.query(Prediction).filter(
-                Prediction.categoria == pred['categoria'],
-                Prediction.ano == pred['ano'],
-                Prediction.mes == pred['mes']
-            ).delete()
-        
+        # Deletar previsões existentes para a chave
+        query = session.query(Prediction)
+        if key_type == 'category':
+            query = query.filter(Prediction.categoria == key_value)
+        else:
+            query = query.filter(Prediction.name == key_value)
+        query.delete()
+
         # Inserir novas previsões
         for pred in predictions:
             prediction = Prediction(
-                categoria=pred['categoria'],
+                categoria=pred.get('categoria'),
+                name=pred.get('name'),
                 ano=pred['ano'],
                 mes=pred['mes'],
                 quantidade=pred['quantidade']
