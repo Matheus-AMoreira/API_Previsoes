@@ -128,12 +128,6 @@ def predict_next_six_months(df, model, scaler_X, scaler_y, device, key_type, key
     predictions = []
     current_date = datetime.now()
     
-    prediction_data = {
-        'ano': ano,
-        'mes': mes,
-        'quantidade': pred
-    }
-
     for i in range(6):
         input_data = last_data[-lag_features:]
         input_data = scaler_X.transform(input_data.reshape(1, -1))
@@ -147,6 +141,13 @@ def predict_next_six_months(df, model, scaler_X, scaler_y, device, key_type, key
         forecast_date = current_date + relativedelta(months=i + 1)
         ano = forecast_date.year
         mes = forecast_date.month
+        
+        # O dicionário agora é criado AQUI, dentro do loop, com os valores corretos.
+        prediction_data = {
+            'ano': ano,
+            'mes': mes,
+            'quantidade': pred
+        }
         
         if key_type == 'category':
             prediction_data['categoria'] = key_value
